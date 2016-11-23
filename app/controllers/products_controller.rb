@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :find_product, except: [:index, :new, :create]
 
   def index
     @products = Product.all.order("created_at DESC")
@@ -27,6 +28,13 @@ class ProductsController < ApplicationController
   end
 
   def update
+    if @product.update(product_params)
+      flash[:notice] = "Updated successfully"
+      redirect_to products_path
+    else
+      flash[:notice] = "Error ! could not saved"
+      render "edit"
+    end
   end
 
   def destroy
@@ -35,6 +43,10 @@ class ProductsController < ApplicationController
   private
 
     def product_params
-      params.require(:product).permit(:name, :description, :price)
+      params.require(:product).permit(:name, :description, :price, :image)
+    end
+
+    def find_product
+      @product = Product.find(params[:id])
     end
 end
