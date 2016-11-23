@@ -1,0 +1,30 @@
+<h1>New Products Entry</h1>
+<br>
+<%= form_for(@product) do |f| %>
+	
+	<% if @product.errors.any? %>
+		<ul>
+			<% @product.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li> 
+			<% end %>
+		</ul>
+	<% end %>
+
+	<div class="form-group">
+		<%= f.label :name %>
+		<%= f.text_field :name, class: "form-control" %>
+	</div>
+
+	<div class="form-group">
+		<%= f.label :description %>
+		<%= f.text_field :description, class: "form-control" %>
+	</div>
+
+	<div class="form-group">
+		<%= f.label :price %>
+		<%= f.text_field :price, class: "form-control" %>
+	</div>
+
+	<%= f.submit "Create Product", class: "btn btn-success"  %>
+
+<% end %>
